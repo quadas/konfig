@@ -183,5 +183,10 @@ package object konfig extends ProductReaders with StandardReaders {
     def read[T](path: String)(implicit cr: ConfigReader[T]): T = {
       cr.read(c, path)
     }
+
+    def read[T]()(implicit cr: ConfigReader[T]): T = {
+      val _KEY = "_"
+      c.atKey(_KEY).read[T](_KEY)
+    }
   }
 }

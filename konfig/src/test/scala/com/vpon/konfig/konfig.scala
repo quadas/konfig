@@ -128,5 +128,8 @@ class KonfigSpec extends FlatSpec with Matchers {
 
     ConfigFactory.parseString("d = 5 day")
       .read[FiniteDuration]("d") should be(5.days)
+
+    ConfigFactory.parseString("a = 3s")
+      .read[Map[String, FiniteDuration]]() should be(Map("a" -> 3.seconds))
   }
 }
