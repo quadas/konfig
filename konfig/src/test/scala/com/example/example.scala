@@ -25,7 +25,7 @@ object Config {
   case class MysqlConfig(connStr: String, db: String) extends DatabaseConfig
 
   def main(args: Array[String]): Unit = {
-    import com.vpon.konfig._
+    import com.quadas.konfig._
     println(ConfigFactory.load().resolve().read[AppConfig]("my-example-app"))
   }
 }

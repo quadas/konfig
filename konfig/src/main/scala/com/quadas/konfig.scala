@@ -1,4 +1,4 @@
-package com.vpon
+package com.quadas
 
 import com.typesafe.config.{ Config, ConfigMemorySize }
 import shapeless._

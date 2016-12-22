@@ -1,4 +1,4 @@
-package com.vpon.konfig
+package com.quadas.konfig
 
 import org.scalacheck._
 import Prop.forAll
@@ -26,7 +26,7 @@ package model {
 }
 
 object KonfigTest extends Properties("konfig") {
-  import com.vpon.konfig.model._
+  import com.quadas.konfig.model._
 
   def parseConfig(c: String): Config = ConfigFactory.parseString(c)
 

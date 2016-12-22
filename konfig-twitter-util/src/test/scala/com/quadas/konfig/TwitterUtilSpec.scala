@@ -1,4 +1,4 @@
-package com.vpon.konfig
+package com.quadas.konfig
 
 import com.twitter.conversions.time._
 import com.twitter.conversions.storage._
@@ -6,7 +6,7 @@ import com.twitter.util.{ Duration, StorageUnit }
 import com.typesafe.config.ConfigFactory
 import org.scalatest.{ Matchers, WordSpecLike }
 
-import com.vpon.konfig.twitterutil._
+import com.quadas.konfig.twitterutil._
 
 class TwitterUtilSpec extends Matchers with WordSpecLike {
   "duration reader" should {
