@@ -1,10 +1,10 @@
-# Konfig [![Travis](https://img.shields.io/travis/vpon/konfig.svg?style=flat-square)](https://travis-ci.org/vpon/konfig)
+# Konfig [![Travis](https://img.shields.io/travis/quadas/konfig.svg?style=flat-square)](https://travis-ci.org/quadas/konfig)
 
 A scala helper library for [typesafe config](https://github.com/typesafehub/config)
 
 ```
-resolvers += Resolver.bintrayRepo("vpon", "maven")
-libraryDependencies += "com.vpon" %% "konfig" % "0.1-M2"
+resolvers += Resolver.bintrayRepo("quadas", "maven")
+libraryDependencies += "com.quadas" %% "konfig" % "0.1-M2"
 ```
 
 _bintray for now, we will publish to jcenter or maven central if enough people use it_
@@ -25,7 +25,7 @@ case class MyAppConfig(host: String, port: Int)
 val config = ConfigFactory.load().read[MyAppConfig]("my-app")
 ```
 
-more: [example.scala](https://github.com/vpon/konfig/blob/master/src/test/scala/com/example/example.scala), [test case](https://github.com/vpon/konfig/blob/master/src/test/scala/com/vpon/konfig/konfig.scala)
+more: [example.scala](https://github.com/quadas/konfig/blob/master/src/test/scala/com/example/example.scala), [test case](https://github.com/quadas/konfig/blob/master/src/test/scala/com/quadas/konfig/konfig.scala)
 
 
 ## license
