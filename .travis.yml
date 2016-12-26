@@ -3,15 +3,17 @@ jdk:
 - oraclejdk8
 env:
   global:
-  - secure: ol8YVL8vEBW6rOg/myUFz7/CXbOxQZoH8TRkdjfNLYGdyCSEKoHmLxEqIt8uzsmRkq8lAb5oTXxQ8T1z27f8UFFD5xokZg5zb01lAsbxo5P/Veg7VsMGa33vNZWW/ne1Tu3FLFQa3/kY/CM/qnmo1uTKXn/qwUcuamZbGMGLXjYwGeP8H3Ovan9JGqNf/egSROExhaPQntfQVS5KlHHY8IRXhTfP2YXrzqD//3il0bk7Q+AYiEBcNr0TFWgQd7kz1hExEIbJhgiyLQgQRv3FDQn3WQHVSWPxN46q0giHl+Ep/CL0paG9a7IxLxIq8EbGZz5aQj/kqlRVPnWAj4BJtYJ5DE6A+PbRPvPm3pUM+B7BPba26K+VfvISiHFJSmvlLW/b3ZFrOSlR6T85QYllz5MGX245USOMu4BSmSdTg+KpCpewMkif3yNveoAwoH0Q+yT/Rcxm1VmEUlakB5e4M9eYW9LvZsKM0m1GPoGDd6HoB5nc/s5ytMUyFhHJiYxACoBDgD8ttJq6vjFMwv8C+D1zcaJiruqghXxPZc/m3cxwu0AcZtJrpnaeelZHhwWXMurKMm4fN4+u/J965mwLVm6b5tFEOeVd1OPohuLvt8uIqxb2WeaBqnTCH44T7WTtf6dN7FF6HEqjs7DxZY+29S3A1ZDvDw2tYT8xcuNCK40=
-  - secure: gpb1m1bwvXfimY7kosFBQnwL8Sag9Z/XHcBE6L/eNKbw4adXCzfDanUMWlIhlm7gP3rBHo5Fn/y12RC+r71TSGHg5m3R70BkkqKmXkEWBWtTdBP5dLSI/6KqGLkaSFvE4pRHhud9gI9r3qtvkkbiop0Uc/0YyoJTUv4q3fNQ4DNvxXVSeI5+B03cxIk00hPgVxhNw3j9dScEjd5xpQaR2vrMKeAcQF3AUJOaxj+lSCZxmmWXYzDlPTo/n0YpBYzKabq76MVVyTdb8Cn3AALFjLWNFhNpWfUf0+mF10nZRT+NiRT7Bz0fqG1CL+Pb3XBgUShbBKhEaTnoBn9HU1e+WVSIDh197vVAtW/isgg1xf+lRe8V1cKkky8FqxWw7gj3OG7FXVJbO/VG3YM2+eUWYlJ+jDCFy3oDiGh0fpfd6BItbhPJW0owqO5rpvIxKb6EnXkzF+75Nbbr7XW8anNQ7+sExGQXpRGPCRzs0A9mxSf54S5cx+Z+xJOo2UHTWS6AcdZm6SovyBwNQUHbQNUVA0eQsesotE4KRsiqqtp2IhQpBJiJ8GT5JNB33HjTYyba94APYyC/V1Xg8ouHyYe+bEawboK0KYCHRC40BRCZCZhnj87Wt2qgiM2ePASU0G1X+KoxND2LJSuhzbHODcS9bBQmLqBjXNBzXPqHkyfOtUA=
+  - secure: CvnJAyQdsz6/AzRPIqzaXLp1XcvcjVGBcmreQgJCeYYJVrDvRq6gWrhnuDzVjJaAkveX9TrA9jVEQlQcuC3Q8OlG4tL7XPnJyxLqArbu6q2R14sCmlB1VUk/qqLNLqv9iV8TOzziUvV51qok5Xyx/nGBdXWZPuHWvzJH6t267e8VaCqbCOr7UcPa2689yAfGrpI/9iQ+fAg89nO2aUFjRIfBETMkzUKeKokVPvQXhMPpIvO3VAdQ1OnE95FTTh+nZLuVXwW1rCG7exMa1HV1/yiTTtqDMY3A8HcgNQBOrurm55IHMIFVxUWToIgCq5zsFeRqZqTzj4i4IU6wP3HgEjqPD/h8p7e+j2rs+H1Gda+cgZWtg93QAXoxVj1dLY/b9I2Le0twTNbF2wbZj+9O5uHGnBAAUgOyPp+nNU4ykq9nhwpx8GaujJ2D4qY8AIzGVdRWkBGU8trIIYNm1C+iw6S9qpRuLdA51M1cZzEIPkcxfgsxXE9H1Pv9Zw84qPY/2rexV0q2msyiCxfu1yYJ8ROlV5UwhLNOMZ/z3yxht+aBZqcL8Mzhri2vAW2fof4XqOhBAGzsKFzDMs/7JdDmmfbebJ232CwHU7aGWkHhvBd3pJzEu2fD1hXkQ4LG8Qh5HCifEPzUFBrovA8xHkWPi1f+Ba60ui83ekVHFBCAa2Q=
+  - secure: BghP+wxCwTe/XSYwD6k0SFdKiG/yE6HGWv0tG/s7aGzwmnF+lb+mkDL04ImC4ThM1hJxIJDHdTAhw4Vi9AUl2GKzCssZ588QrH6S4Fj08F2LV8l//OmYO/Z65Pw3VfxlQJ0PxfFQgUUom2Jl/V7d20/6BKwHCxb28x32EkJ6ihLz2WHvBvzAqCoX7DUySXPxmtkpekH/sCOQZrpN8qnWSrMXbn37kc0rxyiJf7F1dAdPubyolT3Jx5z0UT95YXHspwOxVNNc+s4PDD+FKlHVf7DStUL1QWBBW5EZKB6qD7V3wEEhy0EJrkmu8yROX1EJqjdYNV3qiI+NrtT36fXJ9zJNzpXLcP4Un1JVyUKgf9E9KFNK3B4CrdzsEVFvqLhfjw+lZ9/8rDjzQNqdyph+WEDCnJDLofwJaC10TAYIaaPYY5+M//prkdpp0kQCu3hUoZ3SjifSwafaQ13MyYw7C8lmCmCmV1hRL2GHVcWThILsob4HU5F06btWFmYajfqdTHokRtojbB3lG7lAqLEaO8rAB3/arRjBgadvN4At7UpyDuzuWoSwrYA4WFzzpFIZ4wFfGkueQhBmyzrJHDlwu5hRHH6Ayq9YRKVYc3L1UFcSrSZbfWywpQfdLQi7JPc75WbUwvrKYOM38hbDYbM8gGeRJSs+OAOqNk3j31kAI/w=
 before_script:
 - mkdir ~/.bintray
 - touch ~/.bintray/.credentials
-- echo 'realm = Bintray API Realm' >> ~/.bintray/.credentials
-- echo 'host = api.bintray.com' >> ~/.bintray/.credentials
-- echo "user = $BT_USER" >> ~/.bintray/.credentials
-- echo "password = $BT_KEY" >> ~/.bintray/.credentials
+- echo "$BT_USER"   | sha256sum
+- echo "$BT_KEY"    | sha256sum
+- echo 'realm = Bintray API Realm'  >> ~/.bintray/.credentials
+- echo 'host = api.bintray.com'     >> ~/.bintray/.credentials
+- echo "user = $BT_USER"            >> ~/.bintray/.credentials
+- echo "password = $BT_KEY"         >> ~/.bintray/.credentials
 script:
 - sbt +test && sbt +publish
 cache:
