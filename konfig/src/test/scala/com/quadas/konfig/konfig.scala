@@ -1,73 +1,62 @@
 package com.quadas.konfig
 
-import org.scalacheck._
-import Prop.forAll
-import com.typesafe.config.{ Config, ConfigFactory }
-import org.scalatest.{ FlatSpec, Matchers }
-
 import scala.concurrent.duration._
 
-package model {
-  sealed trait A
-  case class A1(a: Int) extends A
-  case class A2(a: Long) extends A
-  case class A3(a: String) extends A
+import com.typesafe.config.{ Config, ConfigFactory }
+import org.scalacheck._
+import org.scalatest.prop.Checkers
+import org.scalatest.{ FlatSpec, Matchers }
 
-  sealed trait B
-  case class B1(a: A) extends B
-  case class B2(b: Int) extends B
-
-  sealed trait C
-  case object C1 extends C
-  case class C2(a: A) extends C
-  case class C3(b: B) extends C
-
-  case class D(a: A, b: B, c: List[C])
-}
-
-object KonfigTest extends Properties("konfig") {
-  import com.quadas.konfig.model._
+class KonfigTest extends FlatSpec with Matchers with Checkers {
+  sealed trait Database
+  case class Mysql(host: String, port: Int) extends Database
+  case class Postgres(host: String, port: Int) extends Database
+  case class App(
+    database: Database,
+    ssl: Boolean,
+    sslProtocols: List[String],
+    listenPort: Option[Int]
+  )
 
   def parseConfig(c: String): Config = ConfigFactory.parseString(c)
-
-  property("case class derivation") = forAll {
-    (a: Int, b: Int, c: Int, d: Int, e: Int) =>
-      parseConfig(
-        s"""
-              d {
-                a {
-                  type = A1
-                  a = $a
-                }
-                b {
-                  type = B1
-                  a {
-                    type = A2
-                    a = $b
-                  }
-                }
-                c = [
-                  {
-                    type = C1
-                  },
-                  {
-                    type = C2
-                    a = {
-                      type = A3
-                      a = $c
-                    }
-                  }
-                ]
-              }
-          """
-      ).read[D]("d") == D(A1(a), B1(A2(b.toLong)), List(C1, C2(A3(c.toString))))
-  }
-
   implicit val arbiStr = Arbitrary(Gen.alphaStr)
 
-  property("hyphen style key conversion") = forAll {
-    (a: String) =>
-      KeyStyle.Hyphen.style(a).filter(_.isUpper).isEmpty
+  "case class derivation" should "work" in {
+    check(Prop.forAll {
+      (host: String, port: Int, ssl: Boolean, protocols: List[String], listenPort: Int) =>
+        val h = host.replaceAll("\"", "")
+        val protos = protocols.map(_.replaceAll("\"", ""))
+        val app = App(
+          Postgres(h, port),
+          ssl,
+          protos,
+          Some(listenPort)
+        )
+        val protoStr = if (protos.isEmpty) "[]" else protos.mkString("[\"", "\",\"", "\"]")
+        val conf = parseConfig(
+          s"""
+            app {
+              database {
+                type = "Postgres"
+                host = "$h"
+                port = $port
+              }
+              ssl = $ssl
+              ssl-protocols = $protoStr
+              listen-port = $listenPort
+            }
+          """
+        )
+        val parsed = conf.read[App]("app")
+        parsed == app
+    })
+  }
+
+  "hyphen style key conversion" should "work" in {
+    check(Prop.forAll {
+      (a: String) =>
+        KeyStyle.Hyphen.style(a).filter(_.isUpper).isEmpty
+    })
   }
 
 }
