@@ -94,10 +94,11 @@ lazy val publishSettings = Seq(
   bintrayReleaseOnPublish := false,
 
   pomExtra := {
+    <url>https://github.com/quadas/konfig</url>
     <scm>
       <connection>scm:git:https://github.com/quadas/konfig.git</connection>
       <developerConnection>scm:git:https://github.com/quadas/konfig.git</developerConnection>
-      <url>https://github.com/quadas/konfig/</url>
+      <url>https://github.com/quadas/konfig</url>
     </scm>
     <developers>
       <developer>
