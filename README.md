@@ -3,11 +3,8 @@
 A scala helper library for [typesafe config](https://github.com/typesafehub/config)
 
 ```
-resolvers += Resolver.bintrayRepo("quadas", "maven")
-libraryDependencies += "com.quadas" %% "konfig" % "0.1-M2"
+libraryDependencies += "com.quadas" %% "konfig" % "0.1-M8"
 ```
-
-_bintray for now, we will publish to jcenter or maven central if enough people use it_
 
 ## examples
 
@@ -31,7 +28,7 @@ more: [example.scala](https://github.com/quadas/konfig/blob/master/src/test/scal
 ## license
 
 ```
-Copyright 2016 Quadas, Inc
+Copyright 2016-2017 Quadas, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
