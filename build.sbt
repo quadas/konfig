@@ -1,7 +1,7 @@
 organization in Global  := "com.quadas"
 name in Global          := "konfig"
 scalaVersion in Global  := "2.11.8"
-crossScalaVersions in Global := Seq("2.11.8", "2.12.0")
+crossScalaVersions in Global := Seq("2.11.8", "2.12.1")
 
 lazy val root = project.in(file("."))
   .settings(publish := {})
