@@ -1,6 +1,6 @@
 organization in Global  := "com.quadas"
 name in Global          := "konfig"
-scalaVersion in Global  := "2.11.11"
+scalaVersion in Global  := "2.12.2"
 crossScalaVersions in Global := Seq("2.11.11", "2.12.2")
 
 lazy val root = project.in(file("."))
@@ -46,8 +46,8 @@ lazy val commonSettings = Seq(
 )
 
 libraryDependencies in Global ++= Seq(
-  "org.scalacheck"      %%  "scalacheck"    % "1.13.4" % "test",
-  "org.scalatest"       %%  "scalatest"     % "3.0.1" % "test"
+  "org.scalacheck"      %%  "scalacheck"    % "1.13.5" % "test",
+  "org.scalatest"       %%  "scalatest"     % "3.0.3" % "test"
 )
 
 lazy val coreDependencies = Seq(
@@ -59,32 +59,33 @@ lazy val coreDependencies = Seq(
 
 lazy val twitterUtilDependencies = Seq(
   libraryDependencies ++= Seq(
-    "com.twitter"   %% "util-core"  % "6.42.0"
+    "com.twitter"   %% "util-core"  % "6.45.0"
   )
 )
 
 lazy val wartSettings = Seq(
-  wartremoverErrors in (Compile, compile) ++= Seq(
-    Wart.Any
-    , Wart.Any2StringAdd
-    , Wart.AsInstanceOf
-    , Wart.DefaultArguments
-    , Wart.EitherProjectionPartial
-    , Wart.Enumeration
-    // , Wart.ExplicitImplicitTypes
-    , Wart.IsInstanceOf
-    , Wart.JavaConversions
-    , Wart.ListOps
-    // , Wart.NonUnitStatements
-    , Wart.Null
-    , Wart.Option2Iterable
-    , Wart.OptionPartial
-    , Wart.Product
-    , Wart.Return
-    , Wart.Serializable
-    // , Wart.Throw
-    , Wart.TryPartial
-  )
+  wartremoverErrors := Warts.all
+//  wartremoverErrors in (Compile, compile) ++= Seq(
+//    Wart.Any
+//    , Wart.Any2StringAdd
+//    , Wart.AsInstanceOf
+//    , Wart.DefaultArguments
+//    , Wart.EitherProjectionPartial
+//    , Wart.Enumeration
+//    // , Wart.ExplicitImplicitTypes
+//    , Wart.IsInstanceOf
+//    , Wart.JavaConversions
+//    , Wart.ListOps
+//    // , Wart.NonUnitStatements
+//    , Wart.Null
+//    , Wart.Option2Iterable
+//    , Wart.OptionPartial
+//    , Wart.Product
+//    , Wart.Return
+//    , Wart.Serializable
+//    // , Wart.Throw
+//    , Wart.TryPartial
+//  )
 )
 
 lazy val publishSettings = Seq(

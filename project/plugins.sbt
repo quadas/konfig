@@ -1,6 +1,6 @@
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph"  % "0.8.2")
 addSbtPlugin("org.scalariform"  % "sbt-scalariform"       % "1.6.0")
 addSbtPlugin("com.timushev.sbt" % "sbt-updates"           % "0.1.10")
-addSbtPlugin("org.wartremover"  % "sbt-wartremover"       % "1.2.1")
+addSbtPlugin("org.wartremover"  % "sbt-wartremover"       % "2.1.1")
 addSbtPlugin("me.lessis"        % "bintray-sbt"           % "0.3.0")
 addSbtPlugin("com.dwijnand"     % "sbt-dynver"            % "1.1.1")
