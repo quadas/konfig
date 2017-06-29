@@ -18,11 +18,11 @@ package konfig {
 
   object ConfigReader {
     def of[T](f: (Config, String) => T) = new ConfigReader[T] {
-      def read(c: Config, path: String) = f(c, path)
+      def read(c: Config, path: String): T = f(c, path)
     }
 
     def fromString[T](f: String => T) = new ConfigReader[T] {
-      def read(c: Config, path: String) = f(c.getString(path))
+      def read(c: Config, path: String): T = f(c.getString(path))
     }
   }
 
@@ -61,7 +61,7 @@ package konfig {
       cr: Lazy[ConfigReader[Head]],
       tail: Lazy[ConfigReader[Tail]]
     ): ConfigReader[FieldType[Key, Head] :: Tail] = new ConfigReader[FieldType[Key, Head] :: Tail] {
-      override def read(c: Config, path: String) = {
+      override def read(c: Config, path: String): FieldType[Key, Head] :: Tail = {
         val v = cr.value.read(c.getConfig(path), keyStyle.style(key.value.name))
         field[Key](v) :: tail.value.read(c, path)
       }
@@ -79,7 +79,7 @@ package konfig {
       cr: Lazy[ConfigReader[Head]],
       tail: Lazy[ConfigReader[Tail]]
     ): ConfigReader[FieldType[Key, Head] :+: Tail] = new ConfigReader[FieldType[Key, Head] :+: Tail] {
-      override def read(c: Config, path: String) = {
+      override def read(c: Config, path: String): FieldType[Key, Head] :+: Tail = {
         val subTypeValue = c.getConfig(path).getString(subtypeHint.fieldName())
         if (subtypeHint.matchType(subTypeValue, key.value.name)) {
           Inl(field[Key](cr.value.read(c, path)))
@@ -94,7 +94,7 @@ package konfig {
       gen: LabelledGeneric.Aux[T, Repr],
       cr: Lazy[ConfigReader[Repr]]
     ): ConfigReader[T] = new ConfigReader[T] {
-      override def read(c: Config, path: String) = {
+      override def read(c: Config, path: String): T = {
         gen.from(cr.value.read(c, path))
       }
     }
@@ -124,7 +124,7 @@ package konfig {
     implicit def strMapReader[T](implicit cr: ConfigReader[T]): ConfigReader[Map[String, T]] = {
       val _PATH = "_"
       new ConfigReader[Map[String, T]] {
-        override def read(c: Config, path: String) = {
+        override def read(c: Config, path: String): Map[String, T] = {
           val co = c.getConfig(path)
           co.entrySet()
             .asScala

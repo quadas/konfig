@@ -29,7 +29,7 @@ lazy val commonSettings = Seq(
     , "-encoding", "UTF-8"
     , "-feature"                 // Emit warning and location for usages of features that should be imported explicitly
     , "-unchecked"               // Enable additional warnings where generated code depends on assumptions
-    , "-Xfatal-warnings"         // Fail the compilation if there are any warnings
+    // , "-Xfatal-warnings"         // Fail the compilation if there are any warnings
     , "-Xfuture"                 // Turn on future language features
     , "-Xlint"                   // Enable specific warnings (see `scalac -Xlint:help`)
     , "-Yno-adapted-args"        // Do not adapt an argument list (either by inserting () or creating a tuple) to match the receiver
@@ -64,28 +64,7 @@ lazy val twitterUtilDependencies = Seq(
 )
 
 lazy val wartSettings = Seq(
-  wartremoverErrors := Warts.all
-//  wartremoverErrors in (Compile, compile) ++= Seq(
-//    Wart.Any
-//    , Wart.Any2StringAdd
-//    , Wart.AsInstanceOf
-//    , Wart.DefaultArguments
-//    , Wart.EitherProjectionPartial
-//    , Wart.Enumeration
-//    // , Wart.ExplicitImplicitTypes
-//    , Wart.IsInstanceOf
-//    , Wart.JavaConversions
-//    , Wart.ListOps
-//    // , Wart.NonUnitStatements
-//    , Wart.Null
-//    , Wart.Option2Iterable
-//    , Wart.OptionPartial
-//    , Wart.Product
-//    , Wart.Return
-//    , Wart.Serializable
-//    // , Wart.Throw
-//    , Wart.TryPartial
-//  )
+  wartremoverErrors := Warts.allBut()
 )
 
 lazy val publishSettings = Seq(
