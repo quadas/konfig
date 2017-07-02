@@ -12,6 +12,8 @@ import scala.util.Try
 
 package konfig {
 
+  import com.typesafe.config.ConfigValue
+
   trait ConfigReader[T] {
     def read(c: Config, path: String): T
   }
@@ -168,10 +170,51 @@ package konfig {
     }
   }
 
-}
+  trait DeriveConfigReaders {
+    def deriveConfigReader[T](implicit cr: Lazy[konfig.ConfigReader[T]]): konfig.ConfigReader[T] = cr.value
+  }
 
-trait DeriveConfigReaders {
-  def deriveConfigReader[T](implicit cr: Lazy[konfig.ConfigReader[T]]): konfig.ConfigReader[T] = cr.value
+  trait ValueConverter[T] {
+    def toConfigValue(t: T): ConfigValue
+  }
+
+  object ValueConverter {
+    import com.typesafe.config.ConfigValueFactory._
+    def of[T](f: T => ConfigValue): ValueConverter[T] = new ValueConverter[T] {
+      override def toConfigValue(t: T): ConfigValue = f(t)
+    }
+
+    implicit val int = of[Int](a => fromAnyRef(a))
+    implicit val long = of[Long](a => fromAnyRef(a))
+    implicit val float = of[Float](a => fromAnyRef(a))
+    implicit val double = of[Double](a => fromAnyRef(a))
+    implicit val string = of[String](a => fromAnyRef(a))
+
+    implicit def option[T: ValueConverter]: ValueConverter[Option[T]] =
+      new ValueConverter[Option[T]] {
+        override def toConfigValue(t: Option[T]): ConfigValue = {
+          t match {
+            case Some(t0) => implicitly[ValueConverter[T]].toConfigValue(t0)
+            case _ => null
+          }
+        }
+      }
+
+    implicit def map[V: ValueConverter]: ValueConverter[Map[String, V]] =
+      new ValueConverter[Map[String, V]] {
+        override def toConfigValue(t: Map[String, V]): ConfigValue = {
+          val valueMap = t.mapValues(implicitly[ValueConverter[V]].toConfigValue)
+          fromMap(valueMap.asJava)
+        }
+      }
+
+    implicit def seq[T, C[_] <: Seq[T]](implicit vc: ValueConverter[T]): ValueConverter[Seq[T]] =
+      new ValueConverter[Seq[T]] {
+        override def toConfigValue(t: Seq[T]): ConfigValue = {
+          fromIterable(t.toVector.map(vc.toConfigValue).asJava)
+        }
+      }
+  }
 }
 
 package object konfig extends ProductReaders with StandardReaders with DeriveConfigReaders {
@@ -183,14 +226,28 @@ package object konfig extends ProductReaders with StandardReaders with DeriveCon
     override def matchType(fieldValue: String, typeName: String): Boolean = typeName.toLowerCase(LOCALE).startsWith(fieldValue.toLowerCase(LOCALE))
   }
 
-  implicit class EnrichedConfig(val c: Config) extends AnyVal {
+  implicit class EnrichedConfig(private val underlying: Config) extends AnyVal {
     def read[T](path: String)(implicit cr: ConfigReader[T]): T = {
-      cr.read(c, path)
+      cr.read(underlying, path)
     }
 
     def read[T]()(implicit cr: ConfigReader[T]): T = {
       val _KEY = "_"
-      c.atKey(_KEY).read[T](_KEY)
+      underlying.atKey(_KEY).read[T](_KEY)
+    }
+
+    def +[T: ValueConverter](path: String, value: T): Config = {
+      underlying.withValue(path, implicitly[ValueConverter[T]].toConfigValue(value))
+    }
+
+    def ++[T: ValueConverter](pairs: (String, T)*): Config = {
+      pairs.foldRight(underlying) { (a, c) =>
+        c + (a._1, a._2)
+      }
+    }
+
+    def -(path: String): Config = {
+      underlying.withoutPath(path)
     }
   }
 }
