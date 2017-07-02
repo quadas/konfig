@@ -59,11 +59,11 @@ package konfig {
       key: Witness.Aux[Key],
       keyStyle: KeyStyle,
       cr: Lazy[ConfigReader[Head]],
-      tail: Lazy[ConfigReader[Tail]]
+      tail: ConfigReader[Tail]
     ): ConfigReader[FieldType[Key, Head] :: Tail] = new ConfigReader[FieldType[Key, Head] :: Tail] {
       override def read(c: Config, path: String): FieldType[Key, Head] :: Tail = {
         val v = cr.value.read(c.getConfig(path), keyStyle.style(key.value.name))
-        field[Key](v) :: tail.value.read(c, path)
+        field[Key](v) :: tail.read(c, path)
       }
     }
 
@@ -77,14 +77,14 @@ package konfig {
       key: Witness.Aux[Key],
       subtypeHint: SubtypeHint,
       cr: Lazy[ConfigReader[Head]],
-      tail: Lazy[ConfigReader[Tail]]
+      tail: ConfigReader[Tail]
     ): ConfigReader[FieldType[Key, Head] :+: Tail] = new ConfigReader[FieldType[Key, Head] :+: Tail] {
       override def read(c: Config, path: String): FieldType[Key, Head] :+: Tail = {
         val subTypeValue = c.getConfig(path).getString(subtypeHint.fieldName())
         if (subtypeHint.matchType(subTypeValue, key.value.name)) {
           Inl(field[Key](cr.value.read(c, path)))
         } else {
-          Inr(tail.value.read(c, path))
+          Inr(tail.read(c, path))
         }
       }
     }
@@ -92,10 +92,10 @@ package konfig {
     implicit def productReader[T, Repr](
       implicit
       gen: LabelledGeneric.Aux[T, Repr],
-      cr: Lazy[ConfigReader[Repr]]
+      cr: Cached[Strict[ConfigReader[Repr]]]
     ): ConfigReader[T] = new ConfigReader[T] {
       override def read(c: Config, path: String): T = {
-        gen.from(cr.value.read(c, path))
+        gen.from(cr.value.value.read(c, path))
       }
     }
   }
@@ -170,7 +170,11 @@ package konfig {
 
 }
 
-package object konfig extends ProductReaders with StandardReaders {
+trait DeriveConfigReaders {
+  def deriveConfigReader[T](implicit cr: Lazy[konfig.ConfigReader[T]]): konfig.ConfigReader[T] = cr.value
+}
+
+package object konfig extends ProductReaders with StandardReaders with DeriveConfigReaders {
   implicit val keyStyle = KeyStyle.Hyphen
 
   implicit object subtypeHint extends SubtypeHint {

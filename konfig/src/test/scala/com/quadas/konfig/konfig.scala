@@ -122,3 +122,4 @@ class KonfigSpec extends FlatSpec with Matchers {
       .read[Map[String, FiniteDuration]]() should be(Map("a" -> 3.seconds))
   }
 }
+
