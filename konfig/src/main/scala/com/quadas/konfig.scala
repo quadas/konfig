@@ -26,6 +26,14 @@ package konfig {
     def fromString[T](f: String => T) = new ConfigReader[T] {
       def read(c: Config, path: String): T = f(c.getString(path))
     }
+
+    def flat[T](config: Config, reader: ConfigReader[T]): T = {
+      reader.read(config.atKey("_"), "_")
+    }
+
+    def mkFlat[T](cr: ConfigReader[T]): ConfigReader[T] = {
+      of((config, _) => flat(config, cr))
+    }
   }
 
   trait SubtypeHint {

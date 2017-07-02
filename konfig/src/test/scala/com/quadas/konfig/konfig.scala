@@ -123,3 +123,14 @@ class KonfigSpec extends FlatSpec with Matchers {
   }
 }
 
+class FlatReaderSpec extends FlatSpec with Matchers {
+  case class Foo(bar: Int)
+
+  "Feature" should "work" in {
+    val reader = deriveConfigReader[Foo]
+    val c = ConfigFactory.parseString("bar = 5")
+    ConfigReader.flat(c, reader).bar should be(5)
+
+    ConfigReader.mkFlat(reader).read(c, "*(%#@(&^(").bar should be(5)
+  }
+}
