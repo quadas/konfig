@@ -143,10 +143,6 @@ class ConfigOpSpec extends FlatSpec with Matchers {
     (c without "foo") == c.withoutPath("bar") should be(false)
   }
 
-  "withVal" should "work" in {
-    (c withVal ("foo", 15)).getInt("foo") should be(15)
-  }
-
   "withVals" should "work" in {
     (c withVals ("foo" -> 20, "bar" -> 25)) should be(ConfigFactory.parseString("foo=20, bar=25"))
   }

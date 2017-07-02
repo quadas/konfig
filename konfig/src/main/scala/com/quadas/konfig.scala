@@ -243,13 +243,9 @@ package object konfig extends ProductReaders with StandardReaders with DeriveCon
       ConfigReader.flat(underlying, cr)
     }
 
-    def withVal[T: ValueConverter](path: String, value: T): Config = {
-      underlying.withValue(path, implicitly[ValueConverter[T]].toConfigValue(value))
-    }
-
     def withVals[T: ValueConverter](pairs: (String, T)*): Config = {
       pairs.foldRight(underlying) { (a, c) =>
-        c withVal (a._1, a._2)
+        c.withValue(a._1, implicitly[ValueConverter[T]].toConfigValue(a._2))
       }
     }
 
