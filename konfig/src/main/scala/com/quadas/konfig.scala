@@ -244,17 +244,17 @@ package object konfig extends ProductReaders with StandardReaders with DeriveCon
       underlying.atKey(_KEY).read[T](_KEY)
     }
 
-    def +[T: ValueConverter](path: String, value: T): Config = {
+    def withVal[T: ValueConverter](path: String, value: T): Config = {
       underlying.withValue(path, implicitly[ValueConverter[T]].toConfigValue(value))
     }
 
-    def ++[T: ValueConverter](pairs: (String, T)*): Config = {
+    def withVals[T: ValueConverter](pairs: (String, T)*): Config = {
       pairs.foldRight(underlying) { (a, c) =>
-        c + (a._1, a._2)
+        c withVal (a._1, a._2)
       }
     }
 
-    def -(path: String): Config = {
+    def without(path: String): Config = {
       underlying.withoutPath(path)
     }
   }
