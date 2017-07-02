@@ -31,6 +31,10 @@ package konfig {
       reader.read(config.atKey("_"), "_")
     }
 
+    def flat[T](config: ConfigValue, reader: ConfigReader[T]): T = {
+      reader.read(config.atKey("_"), "_")
+    }
+
     def mkFlat[T](cr: ConfigReader[T]): ConfigReader[T] = {
       of((config, _) => flat(config, cr))
     }
@@ -132,7 +136,6 @@ package konfig {
     implicit val configReader: ConfigReader[Config] = ConfigReader.of(_.getConfig(_))
 
     implicit def strMapReader[T](implicit cr: ConfigReader[T]): ConfigReader[Map[String, T]] = {
-      val _PATH = "_"
       new ConfigReader[Map[String, T]] {
         override def read(c: Config, path: String): Map[String, T] = {
           val co = c.getConfig(path)
@@ -140,7 +143,7 @@ package konfig {
             .asScala
             .map {
               ent =>
-                ent.getKey -> cr.read(ent.getValue.atKey(_PATH), _PATH)
+                ent.getKey -> ConfigReader.flat(ent.getValue, cr)
             }
             .toMap
         }
@@ -148,15 +151,12 @@ package konfig {
     }
 
     implicit def listReader[C[_], T](implicit cr: ConfigReader[T], cbf: CanBuildFrom[C[T], T, C[T]]): ConfigReader[C[T]] = {
-      val _PATH = "_"
       new ConfigReader[C[T]] {
         override def read(c: Config, path: String): C[T] = {
-          val coll = cbf()
           c.getList(path)
             .asScala
-            .foreach(v => coll += cr.read(v.atKey(_PATH), _PATH))
-
-          coll.result()
+            .map(v => ConfigReader.flat(v, cr))
+            .to[C]
         }
       }
     }
@@ -216,9 +216,9 @@ package konfig {
         }
       }
 
-    implicit def seq[T, C[_] <: Seq[T]](implicit vc: ValueConverter[T]): ValueConverter[Seq[T]] =
-      new ValueConverter[Seq[T]] {
-        override def toConfigValue(t: Seq[T]): ConfigValue = {
+    implicit def seq[T, C[_] <: Seq[T]](implicit vc: ValueConverter[T]): ValueConverter[C[T]] =
+      new ValueConverter[C[T]] {
+        override def toConfigValue(t: C[T]): ConfigValue = {
           fromIterable(t.toVector.map(vc.toConfigValue).asJava)
         }
       }
@@ -240,8 +240,7 @@ package object konfig extends ProductReaders with StandardReaders with DeriveCon
     }
 
     def read[T]()(implicit cr: ConfigReader[T]): T = {
-      val _KEY = "_"
-      underlying.atKey(_KEY).read[T](_KEY)
+      ConfigReader.flat(underlying, cr)
     }
 
     def withVal[T: ValueConverter](path: String, value: T): Config = {
