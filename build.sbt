@@ -47,7 +47,7 @@ lazy val commonSettings = Seq(
 
 libraryDependencies in Global ++= Seq(
   "org.scalacheck"      %%  "scalacheck"    % "1.13.5" % "test",
-  "org.scalatest"       %%  "scalatest"     % "3.0.3" % "test"
+  "org.scalatest"       %%  "scalatest"     % "3.0.4" % "test"
 )
 
 lazy val coreDependencies = Seq(
